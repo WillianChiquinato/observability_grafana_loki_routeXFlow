@@ -1,14 +1,12 @@
 discovery.relabel "selected" {
   targets = discovery.docker.local.targets
 
-  // Mantém a API e o PostgreSQL do RouteXFlow.
   rule {
     source_labels = ["__meta_docker_container_label_coolify_resourceName"]
     regex         = "^(api-routexflow-prod|banco-postgres-prod)$"
     action        = "keep"
   }
 
-  // Nome do container para pesquisa no Grafana.
   rule {
     source_labels = ["__meta_docker_container_name"]
     regex         = "/(.*)"
@@ -16,7 +14,6 @@ discovery.relabel "selected" {
     replacement   = "$1"
   }
 
-  // Identificação do serviço.
   rule {
     source_labels = ["__meta_docker_container_label_coolify_resourceName"]
     target_label  = "service"
