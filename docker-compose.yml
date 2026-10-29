@@ -18,7 +18,12 @@ services:
       - /etc/alloy/config.alloy
     restart: unless-stopped
     volumes:
-      - ./alloy/config.alloy:/etc/alloy/config.alloy:ro
+      - type: bind
+        source: ./alloy/config.alloy
+        target: /etc/alloy/config.alloy
+        read_only: true
+        bind:
+          create_host_path: false
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - alloy_data:/var/lib/alloy/data
